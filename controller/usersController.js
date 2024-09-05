@@ -18,10 +18,10 @@ import {
   };
   const getUser = async (req, res) => {
     try {
-      const user = await getUserDB(req.params.email) // Assuming you're fetching by username
+      const user = await getUserDB(req.params.id) // Assuming you're fetching by username
       // res.json(await getUserDB(req.params.id))
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).send({ message: "User not found" });
       }
       res.json(user);
     } catch (err) {

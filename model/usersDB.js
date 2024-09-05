@@ -6,10 +6,10 @@ const getUsersDB = async () => {
   return data;
 };
 
-const getUserDB = async (id) => {
+const getUserDB = async (users_id) => {
   //add the [] on '[data]'for removing the array square bracket
   let [[data]] = await pool.query("SELECT * FROM users WHERE users_id = ?", [
-    id,
+    users_id
   ]);
   return data;
 };
@@ -34,7 +34,7 @@ const insertUserDB = async (
     : "INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)";
 
   const params = userRole
-  
+
     ? [name, surname, email, userRole, password]
     : [name, surname, email, password];
 
