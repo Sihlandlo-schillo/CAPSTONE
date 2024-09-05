@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 // import the router
+
 import usersRouter from './routes/usersRouter.js'
 import itemsRouter from './routes/itemsRouter.js'
 
@@ -9,7 +10,7 @@ let port = process.env.PORT || 6262
 const app = express()
 app.use(cors({
     // BELOW, allow backend to accept information (also on front-end 'store')
-    origin:'http://localhost:8080',
+    origin:'http://localhost:8181',
     credentials:true
 }))                                                                                                                                 
 app.use(express.json())

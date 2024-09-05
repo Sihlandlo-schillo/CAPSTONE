@@ -34,6 +34,7 @@ const insertUserDB = async (
     : "INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)";
 
   const params = userRole
+  
     ? [name, surname, email, userRole, password]
     : [name, surname, email, password];
 
