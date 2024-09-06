@@ -15,6 +15,8 @@ const checkUser = async (req,res,next)=>{
     try{
         //Retrieve the use from the database
         const user = await loginUserDB(email)
+        console.log(user);
+        
 
         // check if user exists
         if(!user){

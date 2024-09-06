@@ -18,7 +18,9 @@ const loginUserDB = async (email) => {
   let [[data]] = await pool.query("SELECT * FROM users WHERE email = ?", [
     email,
   ]);
+  console.log(data);
   return data;
+  
 };
 
 const insertUserDB = async (
