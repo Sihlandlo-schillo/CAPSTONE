@@ -80,7 +80,7 @@ const verifyAToken = (req, res, next) => {
         
         }else{
             
-            req.body.user = decoded.username
+            req.body.user = decoded.email
             console.log(decoded);
             next()
         }
