@@ -4,7 +4,7 @@ import {
     insertItemDB,
     deleteItemDB,
     updateItemDB,
-    
+    addToOrdersDB
   } from "../model/itemsDB.js";
   import { hash } from "bcrypt";
   
@@ -18,7 +18,7 @@ import {
   };
   const getItem = async (req, res) => {
     try {
-      const Item = await getItemDB(req.params.email) // Assuming you're fetching by Itemname
+      const Item = await getItemDB(req.params.id) 
       // res.json(await getItemDB(req.params.id))
       if (!Item) {
         return res.status(404).json({ message: "Item not found" });
@@ -30,25 +30,17 @@ import {
   };
   const insertItem = async (req, res) => {
     // console.log(req.headers.cookie.split('=')[1]);
-    let { name, surname, email, ItemRole, password } = req.body;
+    let { item_name, category, brand, quantity, price } = req.body;
   
-    // (password, salt)
     try {
 
-        const existingItem = await loginItemDB(email);
+        const existingItem = await getItemDB(item_name);
     if (existingItem) {
-      return res.status(409).json({ message: "Email already exists" });
+      return res.status(409).json({ message: "Product already exists" });
     }
-
-      hash(password, 10, async (err, hashedP) => {
-          if (err) {
-              return res.status(500).json({ error: 'Error hashing password'});
-          }
-          console.log(hashedP);
-  
-          await insertItemDB(name, surname, email, ItemRole, hashedP);
+          await insertItemDB(item_name, category,brand, quantity, price);
           res.status(201).send("Data was inserted successfully");
-      })
+
     } catch (error) {
       res.status(500).json({ error: 'Error inserting Item'})
     }
@@ -69,24 +61,31 @@ import {
   
   const updateItem = async (req, res) => {
     // res.json(await updateItemDB(req.params.id));
-    let {name, surname,email, ItemRole, password} = req.body
+    let {item_name, category,brand, quantity, price} = req.body
     try {                                                                               
-        let Items = await getItemDB(req.params.id)
-        // console.log(peer);
-       name?name=name: name = Items.name
-       surname ?surname=surname: surname = Items.surname
-       email ?email=email: email = Items.email
-       ItemRole ?ItemRole=ItemRole: ItemRole = Items.ItemRole
-       password ?password=password: password = Items.password
+        let items = await getItemDB(req.params.id)
+        // console.log(items);
+       item_name?item_name=item_name: item_name = items.item_name
+       category ?category=category: category = items.category
+       brand ?brand=brand: brand = items.brand
+       quantity ?quantity=quantity: quantity = items.quantity
+       price ?price=price: price = items.price
     
-       await  updateItemDB(name,surname,email,ItemRole,password,req.params.id)
+       await  updateItemDB(item_name, category,brand, quantity, price,req.params.id)
        res.status(200).json({ message: "Item updated successfully" });
         
     } catch (error) {
         res.status(500).json({ error: "Error occurred while updating Item" });
     }
-
-
   };
-  
-  export { fetchItems, getItem, insertItem, deleteItem, updateItem, loginItem };
+  const addToOrders = async(req,res)=>{
+    console.log(req.body);
+    let {users_id} = await getUserDB(req.body.user)
+    console.log(users_id);
+    
+    await addToOrdersDB(req.body.id, users_id)
+    res.json({message:'You have ordered an item successfully'})
+}
+
+
+  export { fetchItems, getItem, insertItem, deleteItem, updateItem, addToOrders };

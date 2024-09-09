@@ -26,8 +26,8 @@ const updateItemDB = async (item_name,category,brand, quantity, price ,id)=>{
     let [data] = await pool.query('UPDATE Items SET item_name = ?, category = ?, brand = ?, , quantity = ?, price = ? WHERE items_id = ?', [item_name,category,brand,, quantity, price, id])
     return data
 }
-const addToCartDB = async (items_id,users_id)=>{
+const addToOrdersDB = async (items_id,users_id)=>{
     await pool.query('INSERT INTO orders (users_id,items_id) VALUES(?,?)', [users_id,items_id])
 }
 
-export {getItemsDB, getItemDB, insertItemDB, deleteItemDB, updateItemDB, addToCartDB}
+export {getItemsDB, getItemDB, insertItemDB, deleteItemDB, updateItemDB, addToOrdersDB}
