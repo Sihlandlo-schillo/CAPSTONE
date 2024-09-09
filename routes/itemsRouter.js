@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.post('/cart',verifyAToken, addToOrders)
 
-router.get('/',verifyAToken, fetchItems)
+router.get('/', fetchItems)
 router.get('/:id',getItem)
 router.post('/insert',insertItem)
 router.delete('/:id', deleteItem)
