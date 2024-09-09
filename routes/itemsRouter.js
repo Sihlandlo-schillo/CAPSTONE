@@ -5,9 +5,9 @@ import { addToOrdersDB } from '../model/itemsDB.js'
 
 const router = express.Router()
 
-router.post('/cart',verifyAToken, addToOrders)
+router.post('/orders',verifyAToken, addToOrders)
 
-router.get('/', fetchItems)
+router.get('/',verifyAToken, fetchItems)
 router.get('/:id',getItem)
 router.post('/insert',insertItem)
 router.delete('/:id', deleteItem)
