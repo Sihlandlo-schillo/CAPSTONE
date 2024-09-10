@@ -63,28 +63,34 @@ const checkUser = async (req,res,next)=>{
 }
 
 const verifyAToken = (req, res, next) => {
-    let {cookie} = req.headers
+    let token;
 
-    // checks if the token exists first
-    let token = cookie && cookie.split('=')[1]
-
-    if (!token) {
-        return res.status(403).json({ message: 'Missing Token' })
+    // Check if token exists in cookies
+    const { cookie } = req.headers;
+    if (cookie) {
+        token = cookie.split('=')[1];
     }
 
-    // verify token 
-    jwt.verify(token, process.env.SECRET_KEY,(err, decoded)=> {
-        if(err){
+    // Check if token exists in Authorization header (Bearer token)
+    if (!token && req.headers.authorization) {
+        token = req.headers.authorization.split(' ')[1];
+    }
 
-            return res.status(403).json({message:'Invalid Token/ token expired'})
-        
-        }else{
-            
-            req.body.user = decoded.email
+    // If no token is found
+    if (!token) {
+        return res.status(403).json({ message: 'Missing Token' });
+    }
+
+    // Verify token
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ message: 'Invalid Token or token expired' });
+        } else {
+            req.body.user = decoded.email;
             console.log(decoded);
-            next()
+            next();
         }
-    })
-}
+    });
+};
 
 export {checkUser, verifyAToken}
