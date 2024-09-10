@@ -96,6 +96,8 @@ const verifyAToken = (req, res, next) => {
             return res.status(403).json({ message: 'Invalid Token' });
         } else {
             req.body.user = decoded.email;
+            console.log(decoded);
+            
             next();
         }
     });
