@@ -35,8 +35,8 @@ const checkUser = async (req,res,next)=>{
                 let token = jwt.sign({email:email},process.env.SECRET_KEY,{expiresIn:'1h'})
             
                 console.log(token);
-                res.json({ token });
-                // req.body.token = token
+                // res.json({ token });
+                req.body.token = token
                 
                 next()
               
@@ -83,7 +83,9 @@ const checkUser = async (req,res,next)=>{
 // };
 
 const verifyAToken = (req, res, next) => {
-    const token = req.cookies.token || req.headers.authorization?.split(' ')[1]; // Extract from cookie or header
+    let {cookie} = req.headers
+
+    let token = cookie && cookie.split('=')[1]
 
     if (!token) {
         return res.status(403).json({ message: 'Missing Token' });
@@ -91,7 +93,7 @@ const verifyAToken = (req, res, next) => {
 
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
         if (err) {
-            return res.status(403).json({ message: 'Invalid Token/ token expired' });
+            return res.status(403).json({ message: 'Invalid Token' });
         } else {
             req.body.user = decoded.email;
             next();
