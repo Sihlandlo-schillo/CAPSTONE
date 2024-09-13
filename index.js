@@ -8,6 +8,8 @@ import itemsRouter from './routes/itemsRouter.js'
 let port = process.env.PORT || 6262
 
 const app = express()
+app.use(express.static('public')) // Don't know what it is for
+app.use(express.json())
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Credentials", "true");
@@ -18,9 +20,7 @@ app.use((req, res, next) => {
     next();
   });
 app.use(cors())                                                                                                                                 
-app.use(express.json())
 
-app.use(express.static('public')) // Don't know what it is for
 //use the router
 app.use('/users', usersRouter)
 app.use('/items', itemsRouter)
