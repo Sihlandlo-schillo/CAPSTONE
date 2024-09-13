@@ -83,7 +83,7 @@ const checkUser = async (req,res,next)=>{
 // };
 
 const verifyAToken = (req, res, next) => {
-    let token = req.headers.Authorization
+    let token = req.headers.authorization
     console.log(req.headers);
     
     // let token = cookie && cookie.split('=')[1]
