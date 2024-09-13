@@ -10,7 +10,7 @@ let port = process.env.PORT || 6262
 const app = express()
 app.use(cors({
     // BELOW, allow backend to accept information (also on front-end 'store')
-    origin:'https://capstone-4b7d8.web.app/',
+    origin:"*",
     credentials:true
 }))                                                                                                                                 
 app.use(express.json())
