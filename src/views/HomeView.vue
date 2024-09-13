@@ -64,7 +64,7 @@ export default {
   methods: {
     async fetchItems() {
       try {
-        const response = await axios.get('http://localhost:6262/items');
+        const response = await axios.get('https://capstone-lvcc.onrender.com/items');
         this.items = response.data;
       } catch (error) {
         console.error('Error fetching items:', error);
@@ -72,7 +72,7 @@ export default {
     },
     async fetchUsers() {
       try {
-        const response = await axios.get('http://localhost:6262/users');
+        const response = await axios.get('https://capstone-lvcc.onrender.com/users');
         this.users = response.data;
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -80,7 +80,7 @@ export default {
     },
     async fetchOrders() {
       try {
-        const response = await axios.get('http://localhost:6262/items/orders');
+        const response = await axios.get('https://capstone-lvcc.onrender.com/items/orders');
         this.orders = response.data;
       } catch (error) {
         console.error('Error fetching orders:', error);
