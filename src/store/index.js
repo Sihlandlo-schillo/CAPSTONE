@@ -100,7 +100,7 @@ export default createStore({
         location.reload()
         
       } catch (error) {
-        console.log(error.response.data);
+        console.log(error);
         commit('setErrorRegister',error.response.data)
       }
     },
@@ -116,7 +116,7 @@ export default createStore({
         location.reload()
         
       } catch (error) {
-        console.log(error.response.data);
+        console.log(error);
         commit('setErrorLogin',error.response.data)
       }
     },
@@ -138,7 +138,7 @@ export default createStore({
         location.reload()
 
       } catch (error) {
-        console.log(error.response.data);
+        console.log(error);
         commit('setErrorAddItem',error.response.data)
         
       }
