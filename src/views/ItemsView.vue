@@ -12,7 +12,7 @@
       </select>
       <input type="text" placeholder="Search item" v-model="searchTerm" @input="filterItems" />
     </section>
-    <button>
+    <button v-if="isAdmin">
       <router-link to="/manageItems">
         <button>Manage Items</button>
       </router-link>
