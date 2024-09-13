@@ -61,7 +61,7 @@
         height: 40px;
         padding-left: 20px;
         display: block;
-        margin-bottom: px ;
+        margin-bottom: 10px ;
         margin-left: auto;
         margin-right: auto;
         border-radius:20px;
