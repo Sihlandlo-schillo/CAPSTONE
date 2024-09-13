@@ -59,6 +59,8 @@ export default {
     };
   },
   computed: {
+     isAdmin() {
+      return this.$store.state.user && this.$store.state.user.userRole === 'admin'},
     filteredList() {
       return this.$store.state.items.filter(item => {
         const matchesSearch = item.item_name.toLowerCase().includes(this.searchTerm.toLowerCase());
