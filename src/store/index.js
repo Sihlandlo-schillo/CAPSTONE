@@ -10,8 +10,8 @@ import router from '@/router'
 axios.defaults.withCredentials = true
 
 axios.defaults.headers = $cookies.get('token')
-let api_url = 'http://localhost:6262'
-// let api_url = 'https://capstone-lvcc.onrender.com'
+// let api_url = 'http://localhost:6262'
+let api_url = 'https://capstone-lvcc.onrender.com'
 
 
 export default createStore({
