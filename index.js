@@ -19,7 +19,10 @@ app.use((req, res, next) => {
     res.header("Access-Control-Expose-Headers", "Authorization");
     next();
   });
-app.use(cors())                                                                                                                                 
+app.use(cors({
+    origin: ['https://capstone-4b7d8.web.app','*'],
+    credentials: true
+}))                                                                                                                                 
 
 //use the router
 app.use('/users', usersRouter)
