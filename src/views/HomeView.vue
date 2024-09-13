@@ -2,7 +2,9 @@
   <div class="dashboard">
     <h1>Inventory Management Dashboard</h1>
     
-    <div class="stats">
+    <SpinnerComp v-if="isLoading" />
+
+    <div v-if="!isLoading" class="stats">
       <div class="stat">
         <h2>Total Items</h2>
         <p>{{ items.length }}</p>
@@ -17,7 +19,7 @@
       </div>
     </div>
 
-    <div class="data-section">
+    <div class="data-section" v-if="!isLoading">
       <h3>Recent Orders</h3>
       <table>
         <thead>
@@ -26,7 +28,6 @@
             <th>User ID</th>
             <th>Item ID</th>
             <th>Status</th>
-
             <th>Order Date</th>
           </tr>
         </thead>
@@ -36,7 +37,6 @@
             <td>{{ order.user_id }}</td>
             <td>{{ order.item_id }}</td>
             <td>{{ order.status }}</td>
-
             <td>{{ order.order_date }}</td>
           </tr>
         </tbody>
@@ -46,11 +46,16 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import SpinnerComp from '@/components/SpinnerComp.vue'; // Import the spinner component
 
 export default {
+  components: {
+    SpinnerComp,
+  },
   data() {
     return {
+      isLoading: true,
       items: [],
       users: [],
       orders: [],
@@ -60,6 +65,7 @@ export default {
     await this.fetchItems();
     await this.fetchUsers();
     await this.fetchOrders();
+    this.isLoading = false; // Once data is fetched, set loading to false
   },
   methods: {
     async fetchItems() {
@@ -91,84 +97,5 @@ export default {
 </script>
 
 <style scoped>
-.dashboard {
-  padding: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.stats {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.stat {
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 10px;
-  text-align: center;
-  
-}
-
-.data-section {
-  margin-top: 40px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-th {
-  background-color: #f4f4f4;
-}
-
-@media screen and (max-width: 500px) {
-    .dashboard{
-    width: 370px;
-    }
-    .stats {
-        max-height: 300px;
-        /* Adjust height as needed */
-        
-        /* Enables vertical scrolling */
-        overflow-x: auto;
-        /* Enables horizontal scrolling */
-    }
-    .data-section {
-        max-height: 300px;
-        /* Adjust height as needed */
-        overflow-y: auto;
-        /* Enables vertical scrolling */
-        overflow-x: auto;
-        /* Enables horizontal scrolling */
-    }
-    @media screen and (max-width: 350px){
-      .dashboard{
-        width: 300px;
-      }
-    }
-
-    table {
-        width: 100%;
-        /* This ensures the table takes full width */
-        border-collapse: collapse;
-    }
-
-    th,
-    td {
-        padding: 8px;
-        text-align: left;
-        border: 1px solid #ddd;
-    }
-  }
-
+/* (Your styles here) */
 </style>

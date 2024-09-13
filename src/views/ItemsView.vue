@@ -132,18 +132,18 @@ button{
     @media screen and (max-width: 768px) {
     .items {
         max-height:px;
-        /* Adjust height as needed */
+   
         width: 600px;
         margin-right: auto;
         margin-left: auto;
-        /* Enables vertical scrolling */
+    
         overflow-x: auto;
-        /* Enables horizontal scrolling */
+       
     }
 
     table {
         width: 100%;
-        /* This ensures the table takes full width */
+       
         border-collapse: collapse;
     }
 
@@ -159,15 +159,14 @@ button{
     .items {
 
         max-height: px;
-        /* Adjust height as needed */
-        /* overflow-y: auto ; */
+       
         width: 300px;
         margin-top: 5%;
         margin-right: auto;
         margin-left: auto;
-        /* Enables vertical scrolling */
+     
         overflow-x: auto;
-        /* Enables horizontal scrolling */
+       
     }
     #itemsText{
   display: block;
