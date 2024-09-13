@@ -9,7 +9,8 @@ import router from '@/router'
 /* eslint-disable */
 // axios.defaults.withCredentials = true
 
-axios.defaults.headers = $cookies.get('token')
+// axios.defaults.headers = $cookies.get('token')
+axios.defaults.headers.common['Authorization'] = `Bearer ${$cookies.get('token')}`;
 
 let api_url = 'https://capstone-lvcc.onrender.com'
 
@@ -72,24 +73,20 @@ export default createStore({
     }
   },
   actions: {
-    async fetchUsers({commit}){
-      const data = await fetch(api_url+'/users')
-      const users = await data.json()
-      commit('setUsers',users)
+    async fetchUsers({ commit }) {
+      try {
+        const { data } = await axios.get(`${api_url}/users`);
+        commit('setUsers', data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
     },
     async getUser({ commit }, users_id) {
       try {
-        const response = await fetch(`${api_url}/users/${users_id}`);
-  
-        if (!response.ok) {
-          throw new Error(`Error fetching user: ${response.statusText}`);
-        }
-  
-        const user = await response.json();
-        commit('setUser', user);
-  
+        const { data } = await axios.get(`${api_url}/users/${users_id}`);
+        commit('setUser', data);
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching user:', error);
         commit('setUserError', error.message);
       }
     },
