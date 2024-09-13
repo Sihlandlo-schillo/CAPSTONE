@@ -148,7 +148,7 @@ export default createStore({
     },
     async deleteItem({commit}, items_id){
       try {
-        const response = await fetch(`http://localhost:6262/items/${items_id}`, {
+        const response = await fetch(`api_url/items/${items_id}`, {
           method: 'DELETE',
         });
   
@@ -166,7 +166,7 @@ export default createStore({
 
     async fetchItem({ commit }, items_id) {
       try {
-        const response = await fetch(`http://localhost:6262/items/${items_id}`);
+        const response = await fetch(`api_url/items/${items_id}`);
         if (response.ok) {
           const item = await response.json();
           commit('SET_ITEM', item);
@@ -179,7 +179,7 @@ export default createStore({
     },
    async updateItem({ commit }, item) {
       try {
-        const response = await fetch(`http://localhost:6262/items/${item.items_id}`, {
+        const response = await fetch(`api_url/items/${item.items_id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
