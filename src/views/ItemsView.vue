@@ -89,7 +89,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+section{
+  margin-top: 2%;
+}
+select{
+  height: 40px;
+}
+input{
+  height: 40px;
+}
 .items {
     margin-top: 5%;
     margin-bottom: auto;
