@@ -7,7 +7,7 @@ import router from '@/router'
 
 
 /* eslint-disable */
-axios.defaults.withCredentials = true
+// axios.defaults.withCredentials = true
 
 axios.defaults.headers = $cookies.get('token')
 // let api_url = 'http://localhost:6262'
