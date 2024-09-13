@@ -4,9 +4,11 @@ import {
     insertItemDB,
     deleteItemDB,
     updateItemDB,
-    addToOrdersDB
+    addToOrdersDB,
+    getOrdersByUserDB
   } from "../model/itemsDB.js";
-  import { hash } from "bcrypt";
+  import { getUserDB } from "../model/usersDB.js";
+
   
   const fetchItems = async (req, res) => {
     try {
@@ -78,14 +80,73 @@ import {
         res.status(500).json({ error: "Error occurred while updating Item" });
     }
   };
-  const addToOrders = async(req,res)=>{
-    console.log(req.body);
-    let {users_id} = await getUserDB(req.body.user)
-    console.log(users_id);
+
+  const addToOrders = async (req, res) => {
+    try {
+      console.log(req.body);
+  
+      // Retrieve user by email or identifier (req.body.user)
+      const user = await getUserDB(req.body.users_id);
+      console.log(user);
+  
+      // Check if user is found
+      if (!user || !user.users_id) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Extract items_id from req.body
+      const { items_id } = req.body; // Ensure items_id is passed in the request body
+  
+      const item = await getItemDB(items_id);
+      if (!item) {
+        return res.status(404).json({ error: "Item not found" });
+      }
+  
+      // Destructure users_id safely
+      const { users_id } = user;
+  
+      console.log(users_id);
+  
+      // Add item to orders
+      await addToOrdersDB(req.body.id, user.users_id);
+  
+      await addToOrdersDB( users_id, item.items_id);
+  
+      res.json({ message: 'You have ordered an item successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error while processing the order' });
+    }
+  };
+  
+  
+
+//   const addToOrders = async(req,res)=>{
+//     console.log(req.body);
+//     let user = await getUserDB(req.body.user)
+//     console.log(user); // this returns undefined
+
+//     let {users_id} = await getUserDB(req.body.user)
+//     console.log(users_id);
     
-    await addToOrdersDB(req.body.id, users_id)
-    res.json({message:'You have ordered an item successfully'})
-}
+//     await addToOrdersDB(req.body.id, users_id)
+//     res.json({message:'You have ordered an item successfully'})
+// }
+
+// ORDERS CONTROLLER
 
 
-  export { fetchItems, getItem, insertItem, deleteItem, updateItem, addToOrders };
+// // Fetch orders for a user
+const getUserOrders = async (req, res) => {
+  try {
+    const orders = await getOrdersByUserDB(req.params.user_id);
+    res.json(orders);
+
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching orders" });
+  }
+ };
+
+//  export { placeOrder,  };
+
+  export { fetchItems, getItem, insertItem, deleteItem, updateItem, addToOrders, getUserOrders };

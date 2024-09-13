@@ -32,7 +32,7 @@ const checkUser = async (req,res,next)=>{
 
             if(result==true){
 
-                let token = jwt.sign({email:email},process.env.SECRET_KEY,{expiresIn:'1h'})
+                let token = jwt.sign({email:email, users_id:user.users_id},process.env.SECRET_KEY,{expiresIn:'1h'})
             
                 console.log(token);
                 // res.json({ token });
@@ -84,20 +84,24 @@ const checkUser = async (req,res,next)=>{
 
 const verifyAToken = (req, res, next) => {
     let {cookie} = req.headers
-
+    console.log(cookie);
+    
     let token = cookie && cookie.split('=')[1]
+    console.log(token);
 
     if (!token) {
         return res.status(403).json({ message: 'Missing Token' });
     }
-
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
         if (err) {
             return res.status(403).json({ message: 'Invalid Token' });
         } else {
             req.body.user = decoded.email;
-            console.log(decoded);
+            req.body.users_id = decoded.users_id
+
+            console.log(decoded.users_id);
             
+         
             next();
         }
     });

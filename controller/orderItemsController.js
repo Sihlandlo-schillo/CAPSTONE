@@ -3,17 +3,17 @@ import { getItemPriceDB } from '../model/itemsDB.js'; // To fetch item price for
 
 // Place a new order
 const placeOrder = async (req, res) => {
-  const { user_id, item_id, quantity } = req.body;
+  const { users_id, items_id, quantity } = req.body;
 
   try {
     // Fetch item price
-    const item = await getItemPriceDB(item_id);
+    const item = await getItemPriceDB(items_id);
     if (!item) {
       return res.status(404).json({ error: "Item not found" });
     }
 
     const totalAmount = item.price * quantity;
-    await insertOrderDB(user_id, item_id, quantity, totalAmount);
+    await insertOrderDB(users_id, items_id, quantity, totalAmount);
 
     res.status(201).json({ message: "Order placed successfully" });
   } catch (error) {
